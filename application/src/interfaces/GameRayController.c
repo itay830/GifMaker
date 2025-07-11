@@ -4,6 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void GameRayControllerDestroy(GameRayController *gameRayController) {
+  gameRayController->gameLoop->Destroy(gameRayController->gameLoop);
+  free(gameRayController);
+}
+
 GameRayController *GameRayControllerCreate(GameLoop *gameLoop) {
   GameRayController *gameRayController = malloc(sizeof(GameRayController));
   assert(gameRayController != NULL);
@@ -13,10 +18,7 @@ GameRayController *GameRayControllerCreate(GameLoop *gameLoop) {
   return gameRayController;
 }
 
-void GameRayControllerDestroy(GameRayController *gameRayController) {
-  gameRayController->gameLoop->Destroy(gameRayController->gameLoop);
-  free(gameRayController);
-}
+
 
 
 void GameRayControllerPressedKeyInputHandler(GameRayController *gameRayController) {

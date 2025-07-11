@@ -1,2 +1,19 @@
-#pragma once
+#if !defined(LINKEDLIST_TAG) || !defined(LINKEDLIST_TYPE)
+#error sadsad
+#endif
 
+#define LINKEDLIST_CONCAT(tag, method) tag##method
+#define LINKEDLIST_METHOD(tag, method) LINKEDLIST_CONCAT(tag, method)
+#define LINKEDLIST_METHOD_WRAPPER(method) LINKEDLIST_METHOD(LINKEDLIST_TAG, method)
+
+typedef struct LINKEDLIST_TAG LINKEDLIST_TAG;
+
+struct LINKEDLIST_TAG {
+  LINKEDLIST_TYPE items;
+};
+
+#undef LINKEDLIST_TAG
+#undef LINKEDLIST_TYPE
+#undef LINKEDLIST_CONCAT
+#undef LINKEDLIST_METHOD
+#undef LINKEDLIST_METHOD_WRAPPER

@@ -20,8 +20,8 @@ MainViewBuilder *createMainViewBuilder(MainModel *mainModel) {
   return pMainViewBuilder;
 }
 
-void MainViewBuilderRender(MainViewBuilder *viewBuilder, long double dt) {
+ void MainViewBuilderRender(MainViewBuilder *viewBuilder, long double dt) {
   BeginDrawing();
-  ClearBackground(BLACK);
+  ClearBackground(RAYWHITE);
   EndDrawing();
 }
