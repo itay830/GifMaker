@@ -8,6 +8,11 @@ void MainViewBuilderDestroy(MainViewBuilder *this) {
   free(this);
 }
 
+void foo(Button *btn) {
+  MainViewBuilder *obj = btn->object;
+  printf("%i", obj->model->HEIGHT);
+}
+
 MainViewBuilder *NewMainViewBuilder(MainModel *mainModel) {
   printf("Creating MainViewBuilder\n");
   MainViewBuilder *view = malloc(sizeof(MainViewBuilder));
@@ -16,11 +21,16 @@ MainViewBuilder *NewMainViewBuilder(MainModel *mainModel) {
   view->Render = &MainViewBuilderRender;
   view->model = mainModel;
 
+  view->btn = NewButton(100, 100, 200, 80, "EXPERIMENT");
+  view->btn->SetOnClick(view->btn, &foo);
+  view->btn->object = view;
   return view;
 }
 
 void MainViewBuilderRender(MainViewBuilder *this, long double dt) {
   BeginDrawing();
   ClearBackground(BLACK);
+  DrawFPS(10, 10);
+  this->btn->Render(this->btn);
   EndDrawing();
 }

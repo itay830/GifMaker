@@ -9,19 +9,23 @@ struct Button {
   Rectangle *rect;
   char *text;
 
-  void (*OnClick)();
+  void (*OnClick)(Button *this);
 
   void (*Release)(Button *this);
 
   void (*Render)(const Button *this);
 
-  void (*SetOnClick)(Button *this, void (*onClick)());
+  void (*SetOnClick)(Button *this, void (*onClick)(Button *this));
+
+  // Experiment
+  void *object;
+
 };
 
 Button *NewButton(float x, float y, float width, float height, char *text);
 
-void ButtonRender(const Button *this);
+void ButtonRender(Button *this);
 
 void ButtonRelease(Button *this);
 
-void SetOnClick(Button *this, void (*onClick)());
+void SetOnClick(Button *this, void (*onClick)(Button *));

@@ -20,6 +20,7 @@ Button *NewButton(const float x, const float y, const float width, const float h
   btn->Release = &ButtonRelease;
   btn->SetOnClick = &SetOnClick;
   btn->OnClick = nullptr;
+  btn->object = nullptr;
   return btn;
 }
 
@@ -28,14 +29,14 @@ void ButtonRelease(Button *this) {
   free(this);
 }
 
-void ButtonRender(const Button *this) {
+void ButtonRender(Button *this) {
   const int isClicked = GuiButton(*(this->rect), this->text);
   if (this->isEnabled && isClicked) {
-    this->OnClick();
+    this->OnClick(this);
   }
 }
 
-void SetOnClick(Button *this, void (*onClick)()) {
+void SetOnClick(Button *this, void (*onClick)(Button *)) {
   assert(this->OnClick == nullptr);
   this->OnClick = onClick;
 }

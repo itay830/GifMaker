@@ -13,6 +13,9 @@ struct MainViewBuilder {
   void (*Destroy)(MainViewBuilder *viewBuilder);
 
   void (*Render)(MainViewBuilder *viewBuilder, long double dt);
+
+  // Experiment
+  Button *btn;
 };
 
 void MainViewBuilderDestroy(MainViewBuilder *this);
