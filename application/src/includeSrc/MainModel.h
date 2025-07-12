@@ -19,8 +19,8 @@ struct MainModel {
   int HEIGHT;
   char *TITLE;
   int TARGET_FPS;
-  void (*Destroy)(MainModel* pMainModel);
+  void (*Destroy)(MainModel* this);
 };
 
-void destroyMainModel(MainModel* pMainModel);
-MainModel* createMainModel();
+void DestroyMainModel(MainModel* this);
+MainModel* NewMainModel();

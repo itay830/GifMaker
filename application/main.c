@@ -3,7 +3,7 @@
 #include "src/includeSrc/MainController.h"
 
 int main() {
-  MainController *mainController = MainControllerCreate();
+  MainController *mainController = NewMainController();
   mainController->Launch(mainController);
   mainController->Destroy(mainController);
   return EXIT_SUCCESS;

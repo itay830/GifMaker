@@ -9,14 +9,14 @@ typedef struct MainViewBuilder MainViewBuilder;
 
 struct MainViewBuilder {
   MainModel *model;
-  Button *btn;
 
   void (*Destroy)(MainViewBuilder *viewBuilder);
+
   void (*Render)(MainViewBuilder *viewBuilder, long double dt);
 };
 
-void MainViewBuilderDestroy(MainViewBuilder *viewBuilder);
+void MainViewBuilderDestroy(MainViewBuilder *this);
 
-MainViewBuilder *createMainViewBuilder(MainModel *mainModel);
+MainViewBuilder *NewMainViewBuilder(MainModel *mainModel);
 
-void MainViewBuilderRender(MainViewBuilder *viewBuilder, long double dt);
+void MainViewBuilderRender(MainViewBuilder *this, long double dt);

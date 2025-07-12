@@ -12,13 +12,13 @@ struct MainController {
   MainInteractor *interactor;
   MainViewBuilder *viewBuilder;
 
-  void (*Destroy)(MainController *controller);
+  void (*Destroy)(MainController *this);
 
-  void (*Launch)(const MainController *controller);
+  void (*Launch)(const MainController *this);
 };
 
-MainController *MainControllerCreate();
+MainController *NewMainController();
 
-void MainControllerDestroy(MainController *controller);
+void MainControllerDestroy(MainController *this);
 
-void MainControllerLaunch(const MainController *controller);
+void MainControllerLaunch(const MainController *this);

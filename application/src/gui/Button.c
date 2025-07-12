@@ -1,5 +1,4 @@
 #include "includeGui/Button.h"
-
 #include <assert.h>
 #include <stdlib.h>
 
@@ -24,19 +23,19 @@ Button *NewButton(const float x, const float y, const float width, const float h
   return btn;
 }
 
-void ButtonRelease(Button *btn) {
-  free(btn->rect);
-  free(btn);
+void ButtonRelease(Button *this) {
+  free(this->rect);
+  free(this);
 }
 
-void ButtonRender(const Button *btn) {
-  const int isClicked = GuiButton(*(btn->rect), btn->text);
-  if (btn->isEnabled && isClicked) {
-    btn->OnClick();
+void ButtonRender(const Button *this) {
+  const int isClicked = GuiButton(*(this->rect), this->text);
+  if (this->isEnabled && isClicked) {
+    this->OnClick();
   }
 }
 
-void SetOnClick(Button *btn, void (*onClick)()) {
-  assert(btn->OnClick == nullptr);
-  btn->OnClick = onClick;
+void SetOnClick(Button *this, void (*onClick)()) {
+  assert(this->OnClick == nullptr);
+  this->OnClick = onClick;
 }

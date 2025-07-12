@@ -16,21 +16,21 @@ struct Clock {
   uint32_t lastTickIndex;
   double FPS;
 
-  void (*Destroy)(Clock *clock);
+  void (*Destroy)(Clock *this);
 
-  long double (*Tick)(Clock *clock);
+  long double (*Tick)(Clock *this);
 
-  double (*UpdateFPS)(Clock *clock, long double dt);
+  double (*UpdateFPS)(Clock *this, long double dt);
 
-  long double (*GetElapsedTimeNano)(Clock *clock);
+  long double (*GetElapsedTimeNano)(Clock *this);
 };
 
-Clock *ClockCreate();
+Clock *NewClock();
 
-void ClockDestroy(Clock *clock);
+void ClockDestroy(Clock *this);
 
-long double ClockTick(Clock *clock);
+long double ClockTick(Clock *this);
 
-double ClockUpdateFPS(Clock *clock, long double dt);
+double ClockUpdateFPS(Clock *this, long double dt);
 
-long double ClockGetElapsedTimeNano(Clock *clock);
+long double ClockGetElapsedTimeNano(Clock *this);

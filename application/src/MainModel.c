@@ -5,11 +5,11 @@
 #include <stdlib.h>
 
 
-void destroyMainModel(MainModel *pMainModel) {
-  free(pMainModel);
+void DestroyMainModel(MainModel *this) {
+  free(this);
 }
 
-MainModel *createMainModel() {
+MainModel *NewMainModel() {
   printf("Creating MainModel\n");
   MainModel *pMainModel = malloc(sizeof(MainModel));
   assert(pMainModel != NULL);
@@ -17,7 +17,7 @@ MainModel *createMainModel() {
   pMainModel->HEIGHT = 800;
   pMainModel->TARGET_FPS = 60;
   pMainModel->TITLE = "GifMaker";
-  pMainModel->Destroy = &destroyMainModel;
+  pMainModel->Destroy = &DestroyMainModel;
 
   return pMainModel;
 }

@@ -6,7 +6,7 @@
 #include "../includeSrc/MainInteractor.h"
 
 
-GameLoop *GameLoopCreate(
+GameLoop *NewGameLoop(
   void (*update)(MainInteractor *, long double),
   void (*render)(MainViewBuilder *, long double)) {
   printf("Creating GameLoop\n");
@@ -17,24 +17,24 @@ GameLoop *GameLoopCreate(
   gameLoop->Render = render;
   gameLoop->Start = &GameLoopStart;
 
-  gameLoop->clock = ClockCreate();
+  gameLoop->clock = NewClock();
 
   return gameLoop;
 }
 
-void GameLoopDestroy(GameLoop *gameLoop) {
-  gameLoop->clock->Destroy(gameLoop->clock);
-  free(gameLoop);
+void GameLoopDestroy(GameLoop *this) {
+  this->clock->Destroy(this->clock);
+  free(this);
 }
 
-void GameLoopStart(const GameLoop *gameLoop,
+void GameLoopStart(const GameLoop *this,
             MainInteractor *interactor,
             MainViewBuilder *viewBuilder) {
   printf("Starting GameLoop\n");
   while (!WindowShouldClose()) {
     // const long double dt = gameLoop->clock->Tick(gameLoop->clock);
-    gameLoop->Update(interactor, 1);
-    gameLoop->Render(viewBuilder, 1);
+    this->Update(interactor, 1);
+    this->Render(viewBuilder, 1);
   }
 
   CloseWindow();

@@ -1,19 +1,20 @@
 #include "includeSrc/MainController.h"
 #include "interfaces/includeInterface/GameRayController.h"
 #include "includeSrc/GameLoop.h"
+#include  "includeSrc/MainViewBuilder.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-void MainControllerDestroy(MainController *controller) {
-  controller->model->Destroy(controller->model);
-  controller->interactor->Destroy(controller->interactor);
-  controller->viewBuilder->Destroy(controller->viewBuilder);
-  controller->gameController->Destroy(controller->gameController);
-  free(controller);
+void MainControllerDestroy(MainController *this) {
+  this->model->Destroy(this->model);
+  this->interactor->Destroy(this->interactor);
+  this->viewBuilder->Destroy(this->viewBuilder);
+  this->gameController->Destroy(this->gameController);
+  free(this);
 }
 
-MainController *MainControllerCreate() {
+MainController *NewMainController() {
   printf("Creating MainController\n");
   MainController *pMainController = malloc(sizeof(MainController));
   assert(pMainController != NULL);
@@ -21,25 +22,26 @@ MainController *MainControllerCreate() {
   pMainController->Destroy = &MainControllerDestroy;
   pMainController->Launch = &MainControllerLaunch;
 
-  pMainController->model = createMainModel();
-  pMainController->interactor = createMainInteractor(pMainController->model);
-  pMainController->viewBuilder = createMainViewBuilder(pMainController->model);
+  pMainController->model = NewMainModel();
+  pMainController->interactor = NewMainInteractor(pMainController->model);
+  pMainController->viewBuilder = NewMainViewBuilder(
+    pMainController->model);
   pMainController->gameController = GameRayControllerCreate(
-    GameLoopCreate(
+    NewGameLoop(
       pMainController->interactor->Update,
       pMainController->viewBuilder->Render)
   );
   return pMainController;
 }
 
-void MainControllerLaunch(const MainController *controller) {
-  InitWindow(controller->model->WIDTH,
-             controller->model->HEIGHT,
-             controller->model->TITLE);
-  SetTargetFPS(controller->model->TARGET_FPS);
-  controller->gameController->gameLoop->Start(
-    controller->gameController->gameLoop,
-    controller->interactor,
-    controller->viewBuilder
+void MainControllerLaunch(const MainController *this) {
+  InitWindow(this->model->WIDTH,
+             this->model->HEIGHT,
+             this->model->TITLE);
+  SetTargetFPS(this->model->TARGET_FPS);
+  this->gameController->gameLoop->Start(
+    this->gameController->gameLoop,
+    this->interactor,
+    this->viewBuilder
   );
 }

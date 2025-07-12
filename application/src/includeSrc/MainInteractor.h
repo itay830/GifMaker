@@ -2,16 +2,22 @@
 #include "MainModel.h"
 
 typedef struct MainInteractor MainInteractor;
-struct MainInteractor {
-  MainModel* Model;
-  void (*Destroy)(MainInteractor* mainInteractor);
 
-  void (*Update)(MainInteractor* mainInteractor, long double dt);
+struct MainInteractor {
+  MainModel *Model;
+
+  void (*Destroy)(MainInteractor *this);
+
+  void (*Update)(MainInteractor *this, long double dt);
+
+  void (*AddFrame)(MainInteractor *this);
 };
 
-void destroyMainInteractor(MainInteractor* PMainInteractor);
+MainInteractor *NewMainInteractor(MainModel *mainModel);
 
-MainInteractor* createMainInteractor(MainModel *mainModel);
+void DestroyMainInteractor(MainInteractor *this);
 
-void MainInteractorUpdate(MainInteractor* mainInteractor, long double dt);
 
+void MainInteractorUpdate(MainInteractor *this, long double dt);
+
+void MainInteractorAddFrame(MainInteractor *this);

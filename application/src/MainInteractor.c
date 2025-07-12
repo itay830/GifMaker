@@ -4,21 +4,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void destroyMainInteractor(MainInteractor* PMainInteractor) {
-  free(PMainInteractor);
+void MainInteractorAddFrame(MainInteractor *this) {
+  printf("AddedFrame\n");
 }
 
-MainInteractor* createMainInteractor(MainModel* mainModel) {
+void DestroyMainInteractor(MainInteractor* this) {
+  free(this);
+}
+
+MainInteractor* NewMainInteractor(MainModel* mainModel) {
   printf("Creating MainInteractor\n");
   MainInteractor *const pMainInteractor = malloc(sizeof(MainInteractor));
   assert(pMainInteractor != NULL);
   pMainInteractor->Model = mainModel;
-  pMainInteractor->Destroy = &destroyMainInteractor;
+  pMainInteractor->Destroy = &DestroyMainInteractor;
   pMainInteractor->Update = &MainInteractorUpdate;
+
+  pMainInteractor->AddFrame = &MainInteractorAddFrame;
   return pMainInteractor;
 }
 
-
-void MainInteractorUpdate(MainInteractor* mainInteractor, long double dt) {
+void MainInteractorUpdate(MainInteractor* this, long double dt) {
 
 }
