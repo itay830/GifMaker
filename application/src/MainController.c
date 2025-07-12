@@ -1,7 +1,6 @@
-#include "include/MainController.h"
-#include "raylib.h"
-#include "interfaces/include/GameRayController.h"
-#include "include/GameLoop.h"
+#include "includeSrc/MainController.h"
+#include "interfaces/includeInterface/GameRayController.h"
+#include "includeSrc/GameLoop.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,8 +22,8 @@ MainController *MainControllerCreate() {
   pMainController->Launch = &MainControllerLaunch;
 
   pMainController->model = createMainModel();
-  pMainController->viewBuilder = createMainViewBuilder(pMainController->model);
   pMainController->interactor = createMainInteractor(pMainController->model);
+  pMainController->viewBuilder = createMainViewBuilder(pMainController->model);
   pMainController->gameController = GameRayControllerCreate(
     GameLoopCreate(
       pMainController->interactor->Update,

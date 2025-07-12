@@ -33,21 +33,24 @@ endif ()
 
 add_executable(GifMaker main.c
         src/Models/LinkedList.c
-        src/include/LinkedList.h
+        src/includeSrc/LinkedList.h
         src/MainController.c
-        src/include/MainController.h
+        src/includeSrc/MainController.h
         src/MainViewBuilder.c
-        src/include/MainViewBuilder.h
+        src/includeSrc/MainViewBuilder.h
         src/MainInteractor.c
-        src/include/MainInteractor.h
+        src/includeSrc/MainInteractor.h
         src/MainModel.c
-        src/include/MainModel.h
+        src/includeSrc/MainModel.h
         src/interfaces/GameRayController.c
-        src/interfaces/include/GameRayController.h
+        src/interfaces/includeInterface/GameRayController.h
         src/Models/GameLoop.c
-        src/include/GameLoop.h
+        src/includeSrc/GameLoop.h
         src/Models/Clock.c
-        src/include/Clock.h)
+        src/includeSrc/Clock.h
+        src/gui/Button.c
+        src/gui/includeGui/Button.h
+)
 
 target_include_directories(GifMaker PRIVATE
         ${CMAKE_SOURCE_DIR}/cmake-build-debug/_deps/raygui-src/src

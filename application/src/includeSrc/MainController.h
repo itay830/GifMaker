@@ -2,7 +2,7 @@
 #include "MainInteractor.h"
 #include "MainViewBuilder.h"
 #include "MainModel.h"
-#include "../interfaces/include/GameRayController.h"
+#include "../interfaces/includeInterface/GameRayController.h"
 
 typedef struct MainController MainController;
 

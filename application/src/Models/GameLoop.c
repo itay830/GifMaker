@@ -1,22 +1,23 @@
-#include "../include/GameLoop.h"
+#include "../includeSrc/GameLoop.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "raylib.h"
-#include "../include/MainViewBuilder.h"
-#include "../include/MainInteractor.h"
+#include "../includeSrc/MainViewBuilder.h"
+#include "../includeSrc/MainInteractor.h"
 
 
 GameLoop *GameLoopCreate(
   void (*update)(MainInteractor *, long double),
   void (*render)(MainViewBuilder *, long double)) {
   printf("Creating GameLoop\n");
-  GameLoop *const gameLoop = malloc(sizeof(GameLoop));
+  GameLoop *gameLoop = malloc(sizeof(GameLoop));
   assert(gameLoop != NULL);
+  gameLoop->Destroy = &GameLoopDestroy;
   gameLoop->Update = update;
   gameLoop->Render = render;
   gameLoop->Start = &GameLoopStart;
-  gameLoop->Destroy = &GameLoopDestroy;
+
+  gameLoop->clock = ClockCreate();
 
   return gameLoop;
 }

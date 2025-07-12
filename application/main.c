@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "src/include/MainController.h"
+#include "src/includeSrc/MainController.h"
 
 int main() {
   MainController *mainController = MainControllerCreate();

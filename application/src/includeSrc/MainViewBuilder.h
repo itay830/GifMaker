@@ -2,10 +2,14 @@
 
 #include "MainModel.h"
 
+#include "../gui/includeGui/Button.h"
+
+
 typedef struct MainViewBuilder MainViewBuilder;
 
 struct MainViewBuilder {
   MainModel *model;
+  Button *btn;
 
   void (*Destroy)(MainViewBuilder *viewBuilder);
   void (*Render)(MainViewBuilder *viewBuilder, long double dt);
