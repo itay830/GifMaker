@@ -9,16 +9,26 @@ void MainViewBuilderDestroy(MainViewBuilder *viewBuilder) {
   free(viewBuilder);
 }
 
+void btnClicked();
 
 MainViewBuilder *createMainViewBuilder(MainModel *mainModel) {
   printf("Creating MainViewBuilder\n");
-  MainViewBuilder *pMainViewBuilder = malloc(sizeof(MainViewBuilder));
-  assert(pMainViewBuilder != NULL);
-  pMainViewBuilder->Destroy = &MainViewBuilderDestroy;
-  pMainViewBuilder->Render = &MainViewBuilderRender;
-  pMainViewBuilder->model = mainModel;
-  pMainViewBuilder->btn = NewButton(20, 20, 120, 40, "Title");
-  return pMainViewBuilder;
+  MainViewBuilder *view = malloc(sizeof(MainViewBuilder));
+  assert(view != NULL);
+  view->Destroy = &MainViewBuilderDestroy;
+  view->Render = &MainViewBuilderRender;
+  view->model = mainModel;
+
+
+  view->btn = NewButton(mainModel->WIDTH/2 - 200, mainModel->HEIGHT/2 - 80, 400, 160, "Button");
+  view->btn->SetOnClick(view->btn, &btnClicked);
+
+
+  return view;
+}
+
+void btnClicked() {
+  printf("Click!!");
 }
 
 void MainViewBuilderRender(MainViewBuilder *viewBuilder, long double dt) {

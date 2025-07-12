@@ -6,6 +6,7 @@
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
 
+
 Button *NewButton(const float x, const float y, const float width, const float height, char *text) {
   Button *btn = malloc(sizeof(Button));
   assert(btn != NULL);
@@ -18,6 +19,8 @@ Button *NewButton(const float x, const float y, const float width, const float h
   btn->text = text;
   btn->Render = &ButtonRender;
   btn->Release = &ButtonRelease;
+  btn->SetOnClick = &SetOnClick;
+  btn->OnClick = nullptr;
   return btn;
 }
 
@@ -26,9 +29,14 @@ void ButtonRelease(Button *btn) {
   free(btn);
 }
 
-int ButtonRender(Button *btn) {
-  if (btn->isEnabled) {
-    return GuiButton(*(btn->rect), btn->text);
+void ButtonRender(const Button *btn) {
+  const int isClicked = GuiButton(*(btn->rect), btn->text);
+  if (btn->isEnabled && isClicked) {
+    btn->OnClick();
   }
-  return 0;
+}
+
+void SetOnClick(Button *btn, void (*onClick)()) {
+  assert(btn->OnClick == nullptr);
+  btn->OnClick = onClick;
 }
