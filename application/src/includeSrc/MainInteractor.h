@@ -15,9 +15,3 @@ struct MainInteractor {
 
 MainInteractor *NewMainInteractor(MainModel *mainModel);
 
-void DestroyMainInteractor(MainInteractor *this);
-
-
-void MainInteractorUpdate(MainInteractor *this, long double dt);
-
-void MainInteractorAddFrame(MainInteractor *this);

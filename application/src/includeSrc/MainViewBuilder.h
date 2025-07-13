@@ -18,8 +18,5 @@ struct MainViewBuilder {
   Button *btn;
 };
 
-void MainViewBuilderDestroy(MainViewBuilder *this);
-
 MainViewBuilder *NewMainViewBuilder(MainModel *mainModel);
 
-void MainViewBuilderRender(MainViewBuilder *this, long double dt);

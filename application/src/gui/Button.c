@@ -6,6 +6,12 @@
 #include "raygui.h"
 
 
+void Render(Button *this);
+
+void Release(Button *this);
+
+void SetOnClick(Button *this, void (*onClick)(Button *));
+
 Button *NewButton(const float x, const float y, const float width, const float height, char *text) {
   Button *btn = malloc(sizeof(Button));
   assert(btn != NULL);
@@ -16,20 +22,20 @@ Button *NewButton(const float x, const float y, const float width, const float h
   btn->rect->width = width;
   btn->rect->height = height;
   btn->text = text;
-  btn->Render = &ButtonRender;
-  btn->Release = &ButtonRelease;
+  btn->Render = &Render;
+  btn->Release = &Release;
   btn->SetOnClick = &SetOnClick;
   btn->OnClick = nullptr;
-  btn->object = nullptr;
+  btn->ctx = nullptr;
   return btn;
 }
 
-void ButtonRelease(Button *this) {
+void Release(Button *this) {
   free(this->rect);
   free(this);
 }
 
-void ButtonRender(Button *this) {
+void Render(Button *this) {
   const int isClicked = GuiButton(*(this->rect), this->text);
   if (this->isEnabled && isClicked) {
     this->OnClick(this);

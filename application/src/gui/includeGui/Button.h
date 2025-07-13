@@ -13,19 +13,11 @@ struct Button {
 
   void (*Release)(Button *this);
 
-  void (*Render)(const Button *this);
+  void (*Render)(Button *this);
 
   void (*SetOnClick)(Button *this, void (*onClick)(Button *this));
 
-  // Experiment
-  void *object;
-
+  void *ctx; // OnClick context to use
 };
 
 Button *NewButton(float x, float y, float width, float height, char *text);
-
-void ButtonRender(Button *this);
-
-void ButtonRelease(Button *this);
-
-void SetOnClick(Button *this, void (*onClick)(Button *));

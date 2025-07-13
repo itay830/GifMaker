@@ -6,7 +6,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void MainControllerDestroy(MainController *this) {
+void Destroy(MainController *this);
+
+void Launch(const MainController *this);
+
+void Destroy(MainController *this) {
   this->model->Destroy(this->model);
   this->interactor->Destroy(this->interactor);
   this->viewBuilder->Destroy(this->viewBuilder);
@@ -19,8 +23,8 @@ MainController *NewMainController() {
   MainController *pMainController = malloc(sizeof(MainController));
   assert(pMainController != NULL);
 
-  pMainController->Destroy = &MainControllerDestroy;
-  pMainController->Launch = &MainControllerLaunch;
+  pMainController->Destroy = &Destroy;
+  pMainController->Launch = &Launch;
 
   pMainController->model = NewMainModel();
   pMainController->interactor = NewMainInteractor(pMainController->model);
@@ -34,7 +38,7 @@ MainController *NewMainController() {
   return pMainController;
 }
 
-void MainControllerLaunch(const MainController *this) {
+void Launch(const MainController *this) {
   InitWindow(this->model->WIDTH,
              this->model->HEIGHT,
              this->model->TITLE);

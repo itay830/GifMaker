@@ -6,30 +6,36 @@
 #include "../includeSrc/MainInteractor.h"
 
 
+void Destroy(GameLoop *this);
+
+void Start(const GameLoop *this,
+                   MainInteractor *interactor,
+                   MainViewBuilder *viewBuilder);
+
 GameLoop *NewGameLoop(
   void (*update)(MainInteractor *, long double),
   void (*render)(MainViewBuilder *, long double)) {
   printf("Creating GameLoop\n");
   GameLoop *gameLoop = malloc(sizeof(GameLoop));
   assert(gameLoop != NULL);
-  gameLoop->Destroy = &GameLoopDestroy;
+  gameLoop->Destroy = &Destroy;
   gameLoop->Update = update;
   gameLoop->Render = render;
-  gameLoop->Start = &GameLoopStart;
+  gameLoop->Start = &Start;
 
   gameLoop->clock = NewClock();
 
   return gameLoop;
 }
 
-void GameLoopDestroy(GameLoop *this) {
+void Destroy(GameLoop *this) {
   this->clock->Destroy(this->clock);
   free(this);
 }
 
-void GameLoopStart(const GameLoop *this,
-            MainInteractor *interactor,
-            MainViewBuilder *viewBuilder) {
+void Start(const GameLoop *this,
+                   MainInteractor *interactor,
+                   MainViewBuilder *viewBuilder) {
   printf("Starting GameLoop\n");
   while (!WindowShouldClose()) {
     // const long double dt = gameLoop->clock->Tick(gameLoop->clock);

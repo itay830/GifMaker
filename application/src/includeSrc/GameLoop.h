@@ -22,8 +22,3 @@ struct GameLoop {
 GameLoop *NewGameLoop(void (*update)(MainInteractor *interactor, long double dt),
                          void (*render)(MainViewBuilder *viewBuilder, long double dt));
 
-void GameLoopDestroy(GameLoop *this);
-
-void GameLoopStart(const GameLoop *this,
-                   MainInteractor *interactor,
-                   MainViewBuilder *viewBuilder);

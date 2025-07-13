@@ -22,5 +22,4 @@ struct MainModel {
   void (*Destroy)(MainModel* this);
 };
 
-void DestroyMainModel(MainModel* this);
 MainModel* NewMainModel();

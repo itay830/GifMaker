@@ -19,6 +19,4 @@ struct MainController {
 
 MainController *NewMainController();
 
-void MainControllerDestroy(MainController *this);
 
-void MainControllerLaunch(const MainController *this);

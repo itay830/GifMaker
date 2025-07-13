@@ -27,10 +27,4 @@ struct Clock {
 
 Clock *NewClock();
 
-void ClockDestroy(Clock *this);
 
-long double ClockTick(Clock *this);
-
-double ClockUpdateFPS(Clock *this, long double dt);
-
-long double ClockGetElapsedTimeNano(Clock *this);
