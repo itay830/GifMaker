@@ -1,4 +1,4 @@
-#if !defined(LINKEDLIST_TAG) || !defined(LINKEDLIST_TYPE)
+#if !defined(LINKEDLIST_TAG) || !defined(LINKEDLIST_TYPE) || !defined(LINKEDLIST_NODE_TAG)
 #error No type was set for LinkedList.
 #endif
 
@@ -6,14 +6,18 @@
 #define LINKEDLIST_METHOD_WRAPPER(className, methodName) LINKEDLIST_CONCAT(className, methodName)
 #define LINKEDLIST_METHOD(methodName) LINKEDLIST_METHOD_WRAPPER(LINKEDLIST_TAG, methodName)
 
-#define LINKEDLIST_NODE_CONCAT(tag) tag##_node
+
 
 typedef struct LINKEDLIST_TAG LINKEDLIST_TAG;
+typedef struct LINKEDLIST_NODE_TAG LINKEDLIST_NODE_TAG;
 
+struct LINKEDLIST_NODE_TAG {
+  LINKEDLIST_TYPE value;
+  LINKEDLIST_NODE_TAG *next;
+};
 
 struct LINKEDLIST_TAG {
-  LINKEDLIST_TYPE *head;
-
+  LINKEDLIST_NODE_TAG *head;
 };
 
 #undef LINKEDLIST_TAG
@@ -21,3 +25,5 @@ struct LINKEDLIST_TAG {
 #undef LINKEDLIST_METHOD_CONCAT
 #undef LINKEDLIST_METHOD
 #undef LINKEDLIST_METHOD_WRAPPER
+
+#undef LINKEDLIST_NODE_TAG

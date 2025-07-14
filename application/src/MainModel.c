@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void MainModelDestroy(MainModel* this);
+void MainModelDestroy(MainModel *this);
 
 void MainModelDestroy(MainModel *this) {
   free(this);
@@ -12,12 +12,18 @@ void MainModelDestroy(MainModel *this) {
 
 MainModel *NewMainModel() {
   printf("Creating MainModel\n");
-  MainModel *pMainModel = malloc(sizeof(MainModel));
-  assert(pMainModel != NULL);
-  pMainModel->WIDTH = 800;
-  pMainModel->HEIGHT = 800;
-  pMainModel->TARGET_FPS = 60;
-  pMainModel->TITLE = "GifMaker";
-  pMainModel->Destroy = &MainModelDestroy;
-  return pMainModel;
+  MainModel *this = malloc(sizeof(MainModel));
+  assert(this != NULL);
+  this->WIDTH = 800;
+  this->HEIGHT = 800;
+  this->TARGET_FPS = 60;
+  this->TITLE = "GifMaker";
+  this->Destroy = &MainModelDestroy;
+
+  // Experiment
+  FrameNode *node = malloc(sizeof(FrameNode));
+  node->value = 4;
+  node->next = nullptr;
+  free(node);
+  return this;
 }

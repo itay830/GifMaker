@@ -1,20 +1,16 @@
 #pragma once
 
+#define LINKEDLIST_TAG Frames
+#define LINKEDLIST_NODE_TAG FrameNode
 #define LINKEDLIST_TYPE int
-#define LINKEDLIST_TAG FramesInt
 #include "LinkedList.h"
 
-#define LINKEDLIST_TYPE double
-#define LINKEDLIST_TAG FramesDouble
-#include "LinkedList.h"
 
 
 typedef struct MainModel MainModel;
 
 struct MainModel {
-  // FramesInt *frames;
-  // FramesDouble *framesDouble;
-
+  Frames frames;
   int WIDTH;
   int HEIGHT;
   char *TITLE;
