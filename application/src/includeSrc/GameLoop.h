@@ -22,3 +22,4 @@ struct GameLoop {
 GameLoop *NewGameLoop(void (*update)(MainInteractor *interactor, long double dt),
                          void (*render)(MainViewBuilder *viewBuilder, long double dt));
 
+

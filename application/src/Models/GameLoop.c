@@ -5,10 +5,9 @@
 #include "../includeSrc/MainViewBuilder.h"
 #include "../includeSrc/MainInteractor.h"
 
+void GameLoopDestroy(GameLoop *this);
 
-void Destroy(GameLoop *this);
-
-void Start(const GameLoop *this,
+void GameLoopStart(const GameLoop *this,
                    MainInteractor *interactor,
                    MainViewBuilder *viewBuilder);
 
@@ -18,22 +17,22 @@ GameLoop *NewGameLoop(
   printf("Creating GameLoop\n");
   GameLoop *gameLoop = malloc(sizeof(GameLoop));
   assert(gameLoop != NULL);
-  gameLoop->Destroy = &Destroy;
+  gameLoop->Destroy = &GameLoopDestroy;
   gameLoop->Update = update;
   gameLoop->Render = render;
-  gameLoop->Start = &Start;
+  gameLoop->Start = &GameLoopStart;
 
   gameLoop->clock = NewClock();
 
   return gameLoop;
 }
 
-void Destroy(GameLoop *this) {
+void GameLoopDestroy(GameLoop *this) {
   this->clock->Destroy(this->clock);
   free(this);
 }
 
-void Start(const GameLoop *this,
+void GameLoopStart(const GameLoop *this,
                    MainInteractor *interactor,
                    MainViewBuilder *viewBuilder) {
   printf("Starting GameLoop\n");

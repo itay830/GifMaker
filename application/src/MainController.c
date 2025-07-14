@@ -5,12 +5,19 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "raygui.h"
 
-void Destroy(MainController *this);
+void MainControllerDestroy(MainController *this);
 
-void Launch(const MainController *this);
+void MainControllerLaunch(const MainController *this);
 
-void Destroy(MainController *this) {
+void MainControllerAddFrame(Button *btn);
+
+void MainControllerRemoveFrame(Button *btn);
+
+void MainControllerSaveFrames(Button *btn);
+
+void MainControllerDestroy(MainController *this) {
   this->model->Destroy(this->model);
   this->interactor->Destroy(this->interactor);
   this->viewBuilder->Destroy(this->viewBuilder);
@@ -20,32 +27,62 @@ void Destroy(MainController *this) {
 
 MainController *NewMainController() {
   printf("Creating MainController\n");
-  MainController *pMainController = malloc(sizeof(MainController));
-  assert(pMainController != NULL);
+  MainController *this = malloc(sizeof(MainController));
+  assert(this != NULL);
 
-  pMainController->Destroy = &Destroy;
-  pMainController->Launch = &Launch;
+  this->Destroy = &MainControllerDestroy;
+  this->Launch = &MainControllerLaunch;
+  this->AddFrame = &MainControllerAddFrame;
+  this->RemoveFrame = &MainControllerRemoveFrame;
+  this->SaveFrames = &MainControllerSaveFrames;
 
-  pMainController->model = NewMainModel();
-  pMainController->interactor = NewMainInteractor(pMainController->model);
-  pMainController->viewBuilder = NewMainViewBuilder(
-    pMainController->model);
-  pMainController->gameController = GameRayControllerCreate(
+  this->model = NewMainModel();
+  this->interactor = NewMainInteractor(this->model);
+
+  this->viewBuilder = NewMainViewBuilder(
+    this->model,
+    this->AddFrame,
+    this->RemoveFrame,
+    this->SaveFrames);
+
+  this->viewBuilder->addFrameBtn->ctx = this;
+  this->viewBuilder->removeFrameBtn->ctx = this;
+  this->viewBuilder->saveFramesBtn->ctx = this;
+
+  this->gameController = GameRayControllerCreate(
     NewGameLoop(
-      pMainController->interactor->Update,
-      pMainController->viewBuilder->Render)
+      this->interactor->Update,
+      this->viewBuilder->Render)
   );
-  return pMainController;
+  return this;
 }
 
-void Launch(const MainController *this) {
+void MainControllerLaunch(const MainController *this) {
   InitWindow(this->model->WIDTH,
              this->model->HEIGHT,
              this->model->TITLE);
   SetTargetFPS(this->model->TARGET_FPS);
+
+  GuiSetStyle(DEFAULT, TEXT_SIZE, 25);
+
   this->gameController->gameLoop->Start(
     this->gameController->gameLoop,
     this->interactor,
     this->viewBuilder
   );
+}
+
+void MainControllerAddFrame(Button *btn) {
+  const MainController *ctx = btn->ctx;
+  ctx->interactor->AddFrame(ctx->interactor);
+}
+
+void MainControllerRemoveFrame(Button *btn) {
+  const MainController *ctx = btn->ctx;
+  ctx->interactor->RemoveFrame(ctx->interactor);
+}
+
+void MainControllerSaveFrames(Button *btn) {
+  const MainController *ctx = btn->ctx;
+  ctx->interactor->SaveFrames(ctx->interactor);
 }

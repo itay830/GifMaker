@@ -11,7 +11,10 @@ struct MainInteractor {
   void (*Update)(MainInteractor *this, long double dt);
 
   void (*AddFrame)(MainInteractor *this);
+  void (*RemoveFrame)(MainInteractor *this);
+  void (*SaveFrames)(MainInteractor *this);
 };
 
 MainInteractor *NewMainInteractor(MainModel *mainModel);
+
 

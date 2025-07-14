@@ -15,6 +15,10 @@ struct MainController {
   void (*Destroy)(MainController *this);
 
   void (*Launch)(const MainController *this);
+
+  void (*AddFrame)(Button *btn);
+  void (*RemoveFrame)(Button *btn);
+  void (*SaveFrames)(Button *btn);
 };
 
 MainController *NewMainController();

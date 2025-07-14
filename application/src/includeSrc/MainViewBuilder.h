@@ -14,9 +14,13 @@ struct MainViewBuilder {
 
   void (*Render)(MainViewBuilder *viewBuilder, long double dt);
 
-  // Experiment
-  Button *btn;
+  Button *addFrameBtn;
+  Button *removeFrameBtn;
+  Button *saveFramesBtn;
 };
 
-MainViewBuilder *NewMainViewBuilder(MainModel *mainModel);
-
+MainViewBuilder *NewMainViewBuilder(
+  MainModel *mainModel,
+  void (*onAddFrameBtnClick)(Button *),
+  void (*onRemoveFrameBtnClick)(Button *),
+  void (*onSaveFramesBtnClick)(Button *));

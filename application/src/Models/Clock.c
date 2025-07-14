@@ -2,22 +2,21 @@
 #include <assert.h>
 #include <stdlib.h>
 
-void Destroy(Clock *this);
+void ClockDestroy(Clock *this);
 
-long double Tick(Clock *this);
+long double ClockTick(Clock *this);
 
-double UpdateFPS(Clock *this, long double dt);
+double ClockUpdateFPS(Clock *this, long double dt);
 
-long double GetElapsedTimeNano(Clock *this);
+long double ClockGetElapsedTimeNano(Clock *this);
 
 Clock *NewClock() {
   Clock *const clock = malloc(sizeof(Clock));
   assert(clock != NULL);
-  clock->UpdateFPS = &UpdateFPS;
-  clock->Tick = &Tick;
-  clock->Destroy = &Destroy;
-  clock->GetElapsedTimeNano = &GetElapsedTimeNano;
-
+  clock->UpdateFPS = &ClockUpdateFPS;
+  clock->Tick = &ClockTick;
+  clock->Destroy = &ClockDestroy;
+  clock->GetElapsedTimeNano = &ClockGetElapsedTimeNano;
   clock->sTime;
   clock->eTime;
   clock->ticks = 0;
@@ -27,11 +26,11 @@ Clock *NewClock() {
   return clock;
 }
 
-void Destroy(Clock *const this) {
+void ClockDestroy(Clock *const this) {
   free(this);
 }
 
-long double Tick(Clock *this) {
+long double ClockTick(Clock *this) {
   if (this->sTime.tv_nsec == 0) {
     clock_gettime(CLOCK_MONOTONIC, &this->sTime);
   }
@@ -40,7 +39,7 @@ long double Tick(Clock *this) {
   return dt;
 }
 
-double UpdateFPS(Clock *this, const long double dt) {
+double ClockUpdateFPS(Clock *this, const long double dt) {
   assert(false);
   // if (clock->lastTickIndex == FPS_TICK_CHECK) {
   //   clock->FPS = 1; // TODO: nano to ms :3
@@ -55,7 +54,7 @@ double UpdateFPS(Clock *this, const long double dt) {
   // return now;
 }
 
-long double GetElapsedTimeNano(Clock *this) {
+long double ClockGetElapsedTimeNano(Clock *this) {
   clock_gettime(CLOCK_MONOTONIC, &this->eTime);
   const long double dt = (long double) ((this->eTime.tv_sec - this->sTime.tv_sec) * 1000000000L +
                                         (this->eTime.tv_nsec - this->sTime.tv_nsec));

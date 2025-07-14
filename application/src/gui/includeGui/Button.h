@@ -15,9 +15,10 @@ struct Button {
 
   void (*Render)(Button *this);
 
-  void (*SetOnClick)(Button *this, void (*onClick)(Button *this));
+  void (*SetOnClick)(Button *this, void (*onClick)(Button *btn));
 
   void *ctx; // OnClick context to use
 };
 
-Button *NewButton(float x, float y, float width, float height, char *text);
+
+Button *NewButton(Rectangle rect, char *text);

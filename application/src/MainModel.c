@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void Destroy(MainModel* this);
+void MainModelDestroy(MainModel* this);
 
-void Destroy(MainModel *this) {
+void MainModelDestroy(MainModel *this) {
   free(this);
 }
 
@@ -18,7 +18,6 @@ MainModel *NewMainModel() {
   pMainModel->HEIGHT = 800;
   pMainModel->TARGET_FPS = 60;
   pMainModel->TITLE = "GifMaker";
-  pMainModel->Destroy = &Destroy;
-
+  pMainModel->Destroy = &MainModelDestroy;
   return pMainModel;
 }

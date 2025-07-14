@@ -1,23 +1,19 @@
 #include "includeSrc/MainInteractor.h"
-
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
+void MainInteractorDestroy(MainInteractor *this);
+
+void MainInteractorUpdate(MainInteractor *this, long double dt);
+
+void MainInteractorAddFrame(MainInteractor *this);
+void MainInteractorRemoveFrame(MainInteractor *this);
+void MainInteractorSaveFrames(MainInteractor *this);
 
 
-void Destroy(MainInteractor *this);
 
-void Update(MainInteractor *this, long double dt);
-
-void AddFrame(MainInteractor *this);
-
-
-void AddFrame(MainInteractor *this) {
-  printf("AddedFrame\n");
-}
-
-void Destroy(MainInteractor *this) {
+void MainInteractorDestroy(MainInteractor *this) {
   free(this);
 }
 
@@ -26,13 +22,27 @@ MainInteractor *NewMainInteractor(MainModel *mainModel) {
   MainInteractor *const pMainInteractor = malloc(sizeof(MainInteractor));
   assert(pMainInteractor != NULL);
   pMainInteractor->Model = mainModel;
-  pMainInteractor->Destroy = &Destroy;
-  pMainInteractor->Update = &Update;
+  pMainInteractor->Destroy = &MainInteractorDestroy;
+  pMainInteractor->Update = &MainInteractorUpdate;
 
-  pMainInteractor->AddFrame = &AddFrame;
+  pMainInteractor->AddFrame = &MainInteractorAddFrame;
+  pMainInteractor->RemoveFrame = &MainInteractorRemoveFrame;
+  pMainInteractor->SaveFrames = &MainInteractorSaveFrames;
   return pMainInteractor;
 }
 
-void Update(MainInteractor *this, long double dt) {
+void MainInteractorUpdate(MainInteractor *this, long double dt) {
+
 }
 
+void MainInteractorAddFrame(MainInteractor *this) {
+  printf("AddedFrame\n");
+}
+
+void MainInteractorRemoveFrame(MainInteractor *this) {
+  printf("RemoveFrames\n");
+}
+
+void MainInteractorSaveFrames(MainInteractor *this) {
+  printf("SaveFrames\n");
+}

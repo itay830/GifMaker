@@ -5,22 +5,21 @@
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
 
-
 void Render(Button *this);
 
 void Release(Button *this);
 
 void SetOnClick(Button *this, void (*onClick)(Button *));
 
-Button *NewButton(const float x, const float y, const float width, const float height, char *text) {
+Button *NewButton(const Rectangle rect, char *text) {
   Button *btn = malloc(sizeof(Button));
   assert(btn != NULL);
   btn->rect = malloc(sizeof(Rectangle));
   assert(btn->rect != NULL);
-  btn->rect->x = x;
-  btn->rect->y = y;
-  btn->rect->width = width;
-  btn->rect->height = height;
+  btn->rect->x = rect.x;
+  btn->rect->y = rect.y;
+  btn->rect->width = rect.width;
+  btn->rect->height = rect.height;
   btn->text = text;
   btn->Render = &Render;
   btn->Release = &Release;
@@ -29,6 +28,8 @@ Button *NewButton(const float x, const float y, const float width, const float h
   btn->ctx = nullptr;
   return btn;
 }
+
+
 
 void Release(Button *this) {
   free(this->rect);

@@ -4,38 +4,49 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void Destroy(MainViewBuilder *this);
+#define BUTTONS_SPEC CLITERAL(Rectangle){10, 60, 200, 80}
+#define BUTTONS_TOP_LEFT_GAP 100
 
-void Render(MainViewBuilder *this, long double dt);
+void MainViewBuilderDestroy(MainViewBuilder *this);
 
+void MainViewBuilderRender(MainViewBuilder *this, long double dt);
 
-void Destroy(MainViewBuilder *this) {
+void MainViewBuilderDestroy(MainViewBuilder *this) {
   free(this);
 }
 
-void foo(Button *btn) {
-  MainViewBuilder *obj = btn->ctx;
-  printf("%i", obj->model->HEIGHT);
-}
 
-MainViewBuilder *NewMainViewBuilder(MainModel *mainModel) {
+MainViewBuilder *NewMainViewBuilder(MainModel *mainModel,
+  void (*onAddFrameBtnClick)(Button*),
+  void (*onRemoveFrameBtnClick)(Button*),
+  void (*onSaveFramesBtnClick)(Button*)) {
   printf("Creating MainViewBuilder\n");
+
   MainViewBuilder *view = malloc(sizeof(MainViewBuilder));
   assert(view != NULL);
-  view->Destroy = &Destroy;
-  view->Render = &Render;
+  view->Destroy = &MainViewBuilderDestroy;
+  view->Render = &MainViewBuilderRender;
   view->model = mainModel;
 
-  view->btn = NewButton(100, 100, 200, 80, "EXPERIMENT");
-  view->btn->SetOnClick(view->btn, &foo);
-  view->btn->ctx = view;
+  view->addFrameBtn = NewButton(BUTTONS_SPEC, "Add Frame");
+  view->addFrameBtn->SetOnClick(view->addFrameBtn, onAddFrameBtnClick);
+
+  view->removeFrameBtn = NewButton(BUTTONS_SPEC, "Remove Frame");
+  view->removeFrameBtn->rect->y += BUTTONS_TOP_LEFT_GAP;
+  view->removeFrameBtn->SetOnClick(view->removeFrameBtn, onRemoveFrameBtnClick);
+
+  view->saveFramesBtn = NewButton(BUTTONS_SPEC, "Save Frames");
+  view->saveFramesBtn->rect->y += BUTTONS_TOP_LEFT_GAP * 2;
+  view->saveFramesBtn->SetOnClick(view->saveFramesBtn, onSaveFramesBtnClick);
   return view;
 }
 
-void Render(MainViewBuilder *this, long double dt) {
+void MainViewBuilderRender(MainViewBuilder *this, long double dt) {
   BeginDrawing();
   ClearBackground(BLACK);
   DrawFPS(10, 10);
-  this->btn->Render(this->btn);
+  this->addFrameBtn->Render(this->addFrameBtn);
+  this->removeFrameBtn->Render(this->removeFrameBtn);
+  this->saveFramesBtn->Render(this->saveFramesBtn);
   EndDrawing();
 }
